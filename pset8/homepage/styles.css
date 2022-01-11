@@ -1,0 +1,32 @@
+section
+{
+    font-size: 20px;
+}
+
+.subHeader
+{
+    font-size: 22px;
+    font-weight:bold;
+}
+
+h1
+{
+    font-style: italic;
+    font-size: 35px;
+}
+
+body
+{
+    background-Color: lavender;
+}
+
+.subHeaderName
+{
+    text-shadow: 1px 1px #ff0000;
+}
+
+#bulb
+{
+    width: 150px;
+}
+

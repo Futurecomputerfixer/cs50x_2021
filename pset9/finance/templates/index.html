@@ -1,0 +1,40 @@
+{% extends "layout.html" %}
+
+{% block title%}
+    Index
+{% endblock %}
+
+{% block main %}
+    <h1>Stock Summary</h1>
+    <style> table, th, td {
+      border:3px solid black;
+    }
+    </style>
+    <table style="width: 100%">
+        <thead>
+            <tr>
+                <th>SYMBOL</th>
+                <th>NAME</th>
+                <th>PRICE</th>
+                <th>SHARES</th>
+                <th>SUM</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in rows %}
+                <tr>
+                    <td>{{ row["stock"] }}</td>
+                    <td>{{ row["stock_name"] }}</td>
+                    <td>{{ row["price"] | usd }}</td>
+                    <td>{{ row["stock_shares"] }}</td>
+                    <td>{{ row["price_total"] | usd }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <ul class="list-group">
+      <li class="list-group-item list-group-item-success">Cash: {{ cash }}</li>
+      <li class="list-group-item list-group-item-success">Stock Total Value: {{ stockTotalValue }}</li>
+      <li class="list-group-item list-group-item-success">Grand Total(Cash + Stock): {{ grandTotal }}</li>
+    </ul>
+{% endblock %}

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <title>game</title>
+        <link href="styles.css" rel="stylesheet">
+        <script>
+            function on()
+            {
+                document.querySelector('#bulb').src = 'bulbon.gif';
+            }
+
+            function off()
+            {
+                document.querySelector('#bulb').src = 'bulboff.gif';
+            }
+
+        </script>
+    </head>
+    <body>
+        <h1>Let us play a little game with lightbulb</h1>
+        <div>This game is programmed with the knowledge of computer science</div>
+        <button id="on" onclick="on();">Turn on the lightbulb</button>
+        <img src="bulboff.gif" id= "bulb" alt="">
+        <button id="off" onclick="off();">Turn off the lightbulb</button>
+        <hr>
+        <a href="index.html">Main page</a>
+        <hr>
+        <a href="page1.html">Computer Science in Real World</a>
+        <hr>
+        <a href="page2.html">Famous Computer Scientists</a>
+        <hr>
+        <a href="page3.html">A little game with Computer</a>
+        <hr>
+    </body>
+</html>
+
+

@@ -1,0 +1,7 @@
+sort1 uses:  bubble
+How do you know?:  it takes much less time to run the sorted txt than running other ones
+sort2 uses:  merge
+How do you know?: it is the fastest when comparing the running time of the large txt files. 
+sort3 uses:  Selection
+How do you know?: It takes the same amount of time (around 10s) to run random50000, reversed50000, and sorted50000, which are all the same number of digits.
+For selection sorting, it does not matter what each of the number in the list is, only the amount of numbers matter because it will go through every single one. 

@@ -1,0 +1,16 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Ranking
+{% endblock %}
+
+{% block main %}
+    <ul class="list-group">
+      {% for row in rows %}
+      <li class="list-group-item d-flex justify-content-between align-items-center">
+        {{ row["username"] }}
+        <span class="badge badge-primary badge-pill">{{ row["assets"] | usd }}</span>
+      </li>
+      {% endfor %}
+    </ul>
+{% endblock %}

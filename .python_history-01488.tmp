@@ -1,0 +1,38 @@
+print("i love eileen")
+s = "I love eileen"
+s = "Jack Loves Eileen"
+print
+print(s)
+I love you
+exit()
+num = [1, 2, 3, 4,]
+num.insert[3, 5]
+num[len(num)] = [5]
+num[len(num):] = [5]
+print(num)
+for c in num
+for c in num:
+print(num[c - 1])
+for c in num:
+	print(num[c - 1])
+exit()
+import csv
+with open('name.csv', newline=' ') as csvfile:
+	reader = csv.DictReader(csvfile)
+	for row in reader:
+		print(row['first_name'], row['last_name'])
+with open('name.csv', newline=' ') as csvfile:
+	reader = csv.DictReader(csvfile)
+	for row in reader:
+		print(row['first_name'], row['last_name'])
+with open('name.csv', newline='') as csvfile:
+	reader = csv.DictReader(csvfile)
+	for row in reader:
+		print(row['first_name'], row['last_name'])
+with open('name.csv', newline='') as csvfile:
+	reader = csv.DictReader(csvfile)
+		print(row['first_name'], row['last_name'])
+with open('name.csv', newline='') as csvfile:
+	reader = csv.DictReader(csvfile)
+	for row in reader:
+		print(row['first_name'], row['last_name'])

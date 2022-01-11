@@ -1,0 +1,32 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    history
+{% endblock %}
+
+{% block main %}
+    <div> <h1>The time is by default UTC(five hours ahead of EST)</h1> </div>
+    <table style="width: 100%">
+        <style> table, th, td { border:3px solid teal; }</style>
+        <thead>
+            <tr>
+                <th>Time</th>
+                <th>Stock</th>
+                <th>Price($)</th>
+                <th>Shares</th>
+                <th>Action</th>
+            </tr>
+        </theader>
+        <tbody>
+            {% for row in rows %}
+            <tr>
+                <td>{{ row["time"] }}</td>
+                <td>{{ row["symbol"] }}</td>
+                <td>{{ row["price"] }}</td>
+                <td>{{ row["shares"] }}</td>
+                <td>{{ row["action"] }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock%}
