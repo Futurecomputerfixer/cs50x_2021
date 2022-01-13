@@ -1,4 +1,4 @@
 flask
-psycopg2
+sqlite3
 gunicorn
 flask_session
