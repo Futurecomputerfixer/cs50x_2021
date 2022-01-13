@@ -51,11 +51,11 @@ def index():
     cur = conn.cursor()
 
     # greet the user in the mainpage
-    cur.execute("""SELECT username FROM "user" WHERE id = %s""", (session["user_id"],))
+    cur.execute("""SELECT username FROM "user" WHERE id = ?""", (session["user_id"],))
     username = cur.fetchall()
 
     #return all entries of the current user
-    cur.execute("SELECT * FROM entry WHERE user_id = %s ORDER BY entry_date", (session["user_id"],))
+    cur.execute("SELECT * FROM entry WHERE user_id = ? ORDER BY entry_date", (session["user_id"],))
     tmp = cur.fetchall()
 
     # if the user has no entry yet 
@@ -66,7 +66,7 @@ def index():
     # transform the entries to html-friendly lists 
     entries = []
     for entry in tmp:
-        cur.execute("SELECT category FROM category WHERE user_id = %s AND id = %s", (session["user_id"], entry[2]))
+        cur.execute("SELECT category FROM category WHERE user_id = ? AND id = ?", (session["user_id"], entry[2]))
         category = cur.fetchall()
         entry_list = list(entry)
         entry_list.append(category[0][0])
@@ -87,7 +87,7 @@ def category():
         # check if the submitted category already exist
         conn = connect()
         cur = conn.cursor()
-        cur.execute("SELECT category FROM category WHERE user_id = %s", (session["user_id"],))   
+        cur.execute("SELECT category FROM category WHERE user_id = ?", (session["user_id"],))   
         rows = cur.fetchall()  
         category_list = []
         for row in rows:
@@ -98,7 +98,7 @@ def category():
             conn.close()
             return render_template("category.html", apology="THE CATEGORY ALREADY EXISTS")
         else: # store new category in the database
-            cur.execute("INSERT INTO category(category, user_id)VALUES(%s, %s)", (category, session["user_id"]))
+            cur.execute("INSERT INTO category(category, user_id)VALUES(?, ?)", (category, session["user_id"]))
             
             conn.commit()
             conn.close()
@@ -125,9 +125,9 @@ def entry():
         date = request.form.get("date")
 
         # store new entry into the database
-        cur.execute("SELECT id FROM category WHERE category = %s AND user_id = %s", (category, session["user_id"]))
+        cur.execute("SELECT id FROM category WHERE category = ? AND user_id = ?", (category, session["user_id"]))
         id = cur.fetchall()
-        cur.execute("INSERT INTO entry(description, amount, category_id, user_id, entry_date) VALUES(%s, %s, %s, %s, %s)", (description, amount, id[0][0], session["user_id"], date))
+        cur.execute("INSERT INTO entry(description, amount, category_id, user_id, entry_date) VALUES(?, ?, ?, ?, ?)", (description, amount, id[0][0], session["user_id"], date))
         
         conn.commit()
         conn.close()
@@ -137,7 +137,7 @@ def entry():
         # access to the database 
         conn = connect()
         cur = conn.cursor()
-        cur.execute("SELECT category FROM category WHERE user_id = %s", (session["user_id"], ))
+        cur.execute("SELECT category FROM category WHERE user_id = ?", (session["user_id"], ))
         categories = cur.fetchall()
 
         return render_template("entry.html", categories=categories)
@@ -168,11 +168,10 @@ def login():
         conn = connect()
         cur = conn.cursor()
         # execute a statement
-        cur.execute("""SELECT id, hash FROM "user" WHERE username = %s""", (request.form.get("username"), ))   
+        cur.execute("""SELECT id, hash FROM "user" WHERE username = ?""", (request.form.get("username"), ))   
         # fetch data from database then close it
         rows = cur.fetchall()
-        print(rows)
-        print(rows[0][0])
+
         # Ensure username exists and password is correct
         if len(rows) != 1 or not check_password_hash(rows[0][1], request.form.get("password")):
             return render_template("login.html", apology="Invalid Username and/or Password")
@@ -225,15 +224,15 @@ def signup():
             return render_template("signup.html", apology="The Passwords Need to Be the Same")
 
         # check if any other user uses the same username
-        cur.execute("""SELECT * FROM "user" WHERE username = %s""", (username,)) 
+        cur.execute("""SELECT * FROM "user" WHERE username = ?""", (username,)) 
         if cur.fetchall():
             conn.close()
             return render_template("signup.html", apology="The Username Already Exists")
 
         # hash password and create new user account 
         hash = generate_password_hash(request.form.get("password"))
-        cur.execute("""INSERT INTO "user" (username, hash) VALUES(%s, %s)""", (request.form.get("username"), hash))
-        cur.execute("""SELECT id FROM "user" WHERE username = %s""", (username,))
+        cur.execute("""INSERT INTO "user" (username, hash) VALUES(?, ?)""", (request.form.get("username"), hash))
+        cur.execute("""SELECT id FROM "user" WHERE username = ?""", (username,))
         
         # log the user in
         rows = cur.fetchall()
@@ -254,12 +253,12 @@ def summary():
     """display monthly spending"""
     conn = connect()
     cur = conn.cursor()
-    cur.execute("SELECT id, category FROM category WHERE user_id = %s", (session["user_id"],))   
+    cur.execute("SELECT id, category FROM category WHERE user_id = ?", (session["user_id"],))   
     rows = cur.fetchall()  
     summary = []
 
     for row in rows:
-        cur.execute("SELECT SUM(AMOUNT) FROM entry WHERE user_id = %s AND category_id = %s", (session["user_id"], row[0]))
+        cur.execute("SELECT SUM(AMOUNT) FROM entry WHERE user_id = ? AND category_id = ?", (session["user_id"], row[0]))
         sum = cur.fetchall()
         list = [row[1]] 
         list.append(sum[0][0])

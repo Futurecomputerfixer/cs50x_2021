@@ -1,30 +1,30 @@
-import psycopg2
-#!/usr/bin/python
-from configparser import ConfigParser
-
-
-def config(filename='database.ini', section='postgresql'):
-    # create a parser
-    parser = ConfigParser()
-    # read config file
-    parser.read(filename)
-
-    # get section, default to postgresql
-    db = {}
-    if parser.has_section(section):
-        params = parser.items(section)
-        for param in params:
-            db[param[0]] = param[1]
-    else:
-        raise Exception('Section {0} not found in the {1} file'.format(section, filename))
-
-    return db
+import sqlite3
 
 def connect():
-    """ Connect to the PostgreSQL database server """
-    conn = None
-    params = config()
-    # connect to the PostgreSQL server
-    conn = psycopg2.connect(**params)
-
+    conn = sqlite3.connect('theTallyBookdb.sqlite')
+    sqlstr = '''
+CREATE TABLE IF NOT EXISTS entry( 
+	description TEXT,
+	amount INTEGER,
+	category_id INTEGER,
+	user_id INTEGER,
+	entry_date TEXT,
+	FOREIGN KEY(user_id)
+		REFERENCES "user"(id),
+	FOREIGN KEY(category_id)
+		REFERENCES category(id)
+);
+CREATE TABLE IF NOT EXISTS category (
+	id INTEGER NOT NULL  PRIMARY KEY AUTOINCREMENT,
+	category TEXT,
+	user_id INTEGER,
+	FOREIGN KEY(user_id)
+		REFERENCES user(id)
+);
+CREATE TABLE IF NOT EXISTS user (
+	id INTEGER NOT NULL  PRIMARY KEY AUTOINCREMENT ,
+	username TEXT,
+	hash TEXT
+)'''
+    conn.executescript(sqlstr)
     return conn
